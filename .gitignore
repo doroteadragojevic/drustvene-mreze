@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Exclude application.yml and application.properties
+src/main/resources/application.yml
+src/main/resources/application.properties

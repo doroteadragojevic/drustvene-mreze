@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
-        <title>Spring Security Example</title>
+        <title>Drumre</title>
     </head>
     <body>
         <h1>Welcome!</h1>
 
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+        <p>
+            <button onclick="window.location.href='@{/hello}'" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Login
+            </button>
+        </p>
     </body>
 </html>
