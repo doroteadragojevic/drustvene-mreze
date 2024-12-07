@@ -83,23 +83,127 @@
         button:hover {
             background-color: #0284A8;
         }
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #01B4E4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-button:hover {
+            background-color: #0284A8;
+        }
+        .favorites-button {
+            position: absolute;
+            top: 10px;
+            right: 130px;
+            background-color: #01B4E4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .favorites-button:hover {
+            background-color: #0284A8;
+        }
+
+        .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    gap: 10px;
+}
+
+.search input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #01B4E4;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #1C1C1C;
+    color: #FFFFFF;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search input[type="text"]:focus {
+    border-color: #0284A8;
+}
+
+.search button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #01B4E4;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search button:hover {
+    background-color: #0284A8;
+}
+
+.search a {
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #034B5E;
+    color: #FFFFFF;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.search a:hover {
+    background-color: #0284A8;
+}
+
     </style>
 </head>
 <body>
 <header>
     <h1>Your Personalized Movie App</h1>
 </header>
+<form th:action="@{/logout}" method="post"  th:if="${auth}">
+    <input type="submit" value="Sign Out" class="logout-button"/>
+</form>
+<button class="favorites-button" th:if="${auth}" th:onclick="'window.location.href=\'/favorites\''">
+    Favorites
+</button>
 
 <div class="welcome-message">
     <p>Welcome! Discover the latest movies and watch trailers instantly.</p>
 </div>
 
-<div class="login-message">
+<div class="login-message" th:if="!${auth}">
     <p>Login for better experience:</p>
 </div>
-<p style="text-align: center;">
+<p style="text-align: center;" th:if="!${auth}">
     <button onclick="window.location.href='@{/hello}'">Login</button>
 </p>
+
+<div class="search">
+    <form method="get" th:action="@{/search}">
+        <input name="keyword" placeholder="Find by movie name" size="50" th:value="${keyword}" type="text">
+        <button class="btn btn-info" type="submit">Search</button>
+    </form>
+    <a class="btn btn-info" th:href="@{/}">Reset</a>
+</div>
 
 <div class="movie-container">
     <div class="movie-card" th:each="movie : ${movies}">
@@ -117,10 +221,13 @@
     </div>
 </div>
 
-<script th:inline="javascript">
-    function addFavorite(id) {
-        alert("total students: " + total)
+</body>
+
+<script>
+    if (window.location.hash === "#_=_") {
+        history.replaceState
+            ? history.replaceState(null, null, window.location.href.split("#")[0])
+            : window.location.hash = "";
     }
 </script>
-</body>
 </html>

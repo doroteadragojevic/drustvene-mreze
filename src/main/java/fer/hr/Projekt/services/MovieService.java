@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MovieService {
@@ -46,5 +47,13 @@ public class MovieService {
 
     public Movie getMovieById(String id) {
         return movieRepository.findById(id).get();
+    }
+
+    public List<Movie> fetchMovies(Set<String> favoriteMovies) {
+        return movieRepository.findAllById(favoriteMovies);
+    }
+
+    public List<Movie> findByKeyword(String keyword) {
+        return movieRepository.findAll().stream().filter(movie -> movie.getTitle().contains(keyword)).toList();
     }
 }

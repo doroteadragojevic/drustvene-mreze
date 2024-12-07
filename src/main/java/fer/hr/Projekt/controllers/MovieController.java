@@ -32,13 +32,21 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public String movie(Model model, @PathVariable String id){
+    public String movie(Model model, @PathVariable String id, @AuthenticationPrincipal OAuth2User principal){
         Movie movie = null;
         try {
             movie = movieService.getMovieById(id);
         } catch (NoSuchElementException e) {
         }
         model.addAttribute("movie", movie);
+        model.addAttribute("auth", principal != null);
         return "movie";
+    }
+
+    @GetMapping("/search")
+    public String search(Model model, String keyword, @AuthenticationPrincipal OAuth2User principal){
+        model.addAttribute("movies", movieService.findByKeyword(keyword));
+        model.addAttribute("auth", principal != null);
+        return "hello";
     }
 }

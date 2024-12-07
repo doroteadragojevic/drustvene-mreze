@@ -23,16 +23,20 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/error", "/movie/*").permitAll()
+                        .requestMatchers("/", "/error", "/movie/*", "/search").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login((oauth2) -> oauth2
                         .loginPage("/oauth2/authorization/facebook")
-                        .defaultSuccessUrl("/hello", true)
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect("/");
+                        })
                         .permitAll()
                 )
                 .logout(l -> l
-                        .logoutSuccessUrl("/").permitAll()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/").permitAll().clearAuthentication(true)
+                        .permitAll()
                 )
                 .csrf(c -> c
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())

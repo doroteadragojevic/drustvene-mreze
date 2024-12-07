@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,6 +28,6 @@ public class MovieDTO {
     private int vote_count;
 
     public Movie toDAO(){
-        return new Movie(Integer.toString(id), Integer.toString(id), title, overview, List.of(), null, poster_path, backdrop_path);
+        return new Movie(Integer.toString(id), Integer.toString(id), title, overview, null, poster_path, backdrop_path);
     }
 }

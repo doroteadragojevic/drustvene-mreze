@@ -72,9 +72,34 @@
             color: #000;
             font-weight: normal;
         }
+        .logout-button, .home-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #01B4E4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-button:hover, .home-button:hover {
+            background-color: #0284A8;
+        }
+
+        .home-button {
+            right: 130px;
+        }
     </style>
 </head>
 <body th:style="'background-image: url(https://image.tmdb.org/t/p/original/' + ${movie.backdropPath} + ')'">
+<form th:action="@{/logout}" method="post"  th:if="${auth}">
+    <input type="submit" value="Sign Out" class="logout-button"/>
+</form>
+<a class="home-button" th:href="@{/}">Home</a>
 <div class="overlay">
     <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.posterPath}" alt="Movie Poster" class="movie-poster">
     <div class="movie-details">
