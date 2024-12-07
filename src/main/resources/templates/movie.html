@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.title}">Movie Details</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.8); /* Svijetlosivi prozirni sloj */
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 50px auto;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .movie-poster {
+            flex: 1;
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .movie-details {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .movie-title {
+            font-size: 2em;
+            color: #0D253F;
+        }
+
+        .trailer-button a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #01B4E4;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .trailer-button a:hover {
+            background-color: #008ecf;
+        }
+
+        .overview-text,
+        .genres-label {
+            color: #000; /* Crna boja za tekst */
+            font-weight: bold;
+        }
+
+        .overview-content {
+            color: #000; /* Crna boja za sadržaj overviewa */
+        }
+
+        .genres-text {
+            color: #000;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body th:style="'background-image: url(https://image.tmdb.org/t/p/original/' + ${movie.backdropPath} + ')'">
+<div class="overlay">
+    <img th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.posterPath}" alt="Movie Poster" class="movie-poster">
+    <div class="movie-details">
+        <h1 class="movie-title" th:text="${movie.title}">Movie Title</h1>
+        <p class="overview-text">Overview:</p>
+        <p class="overview-content" th:text="${movie.overview}">Movie overview goes here...</p>
+        <p class="genres-label">Genres:</p>
+        <p class="genres-text">
+    <span th:each="genre, iterStat : ${movie.genres}"
+          th:text="${genre} + (iterStat.last ? '' : ', ') + ', '"></span>
+        </p>
+        <div class="trailer-button">
+            <a th:href="${movie.trailerUrl}" target="_blank">Watch Trailer</a>
+        </div>
+        <form method="POST" th:action="@{'/user/add/' + ${movie.id}}">
+            <button th:if="${auth}"
+                    type="submit"
+                    class="favorite-button"
+                    style="margin-top: 10px; background-color: #34D2FE; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">
+                Add to Favorites
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

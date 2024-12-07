@@ -6,15 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Optional;
-
 @Controller
 public class Cotroller {
-
-    @GetMapping("/")
-    public String home() {
-        return "home"; // Ovo odgovara home.html u templates direktoriju
-    }
 
     @GetMapping("/hello")
     public String hello(Model model, Authentication authentication) {

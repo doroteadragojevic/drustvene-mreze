@@ -23,7 +23,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/error").permitAll()
+                        .requestMatchers("/", "/error", "/movie/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login((oauth2) -> oauth2
